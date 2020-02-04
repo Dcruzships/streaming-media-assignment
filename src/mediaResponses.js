@@ -1,24 +1,10 @@
 const fs = require('fs'); // pull in the file system module
 const path = require('path');
 
-const getParty = (request, response) => {
-  loadFile(request, response, '../client/party.mp4', 'video/mp4');
-};
-
-const getBling = (request, response) => {
-  loadFile(request, response, '../client/bling.mp3', 'audio/mpeg');
-};
-
-const getBird = (request, response) => {
-  loadFile(request, response, '../client/bird.mp4', 'video/mp4');
-};
-
-let loadFile = (request, response, fileLoc, tag) =>
-{
+const loadFile = (request, response, fileLoc, tag) => {
   const file = path.resolve(__dirname, fileLoc);
 
-  fs.stat(file, (err, stats) =>
-  {
+  fs.stat(file, (err, stats) => {
     if (err) {
       if (err.code === 'ENOENT') {
         response.writeHead(404);
@@ -52,7 +38,7 @@ let loadFile = (request, response, fileLoc, tag) =>
       'Content-Type': tag,
     });
 
-    const stream = fs.createReadStream(file, { start, end } );
+    const stream = fs.createReadStream(file, { start, end });
 
     stream.on('open', () => {
       stream.pipe(response);
@@ -64,6 +50,18 @@ let loadFile = (request, response, fileLoc, tag) =>
 
     return stream;
   });
+};
+
+const getParty = (request, response) => {
+  loadFile(request, response, '../client/party.mp4', 'video/mp4');
+};
+
+const getBling = (request, response) => {
+  loadFile(request, response, '../client/bling.mp3', 'audio/mpeg');
+};
+
+const getBird = (request, response) => {
+  loadFile(request, response, '../client/bird.mp4', 'video/mp4');
 };
 
 module.exports.getParty = getParty;

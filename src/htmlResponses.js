@@ -9,7 +9,7 @@ const getIndex = (request, response) => {
 };
 
 const getPage = (request, response, fileLoc) => {
-  let page = fs.readFileSync(`${__dirname}/${fileLoc}`);
+  const page = fs.readFileSync(`${__dirname}/${fileLoc}`);
 
   response.writeHead(200, { 'Content-Type': 'text/html' });
   response.write(page);
